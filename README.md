@@ -1,12 +1,30 @@
-# Main Project
+# Prueba Técnica Inventures - Tetris
 
-## Description
-This is the main project. It is designed to solve a specific problem or provide a specific service. 
+## Descripción
+Este proyecto consiste en la creación de un Tetris
 
-## Installation
-To install this project, clone the repository and run the installation script.
-
+## Installación
+EL proyecto se desarrolló en Python 3.9.13
+Para instalar el proyecto basta con correr
 ```bash
-git clone https://github.com/yourusername/main.git
-cd main
-./install.sh
+pip install -r requirements.txt
+```
+
+Para correr el programa
+```bash
+python main.py
+```
+
+## Jugabilidad
+### Botones
+&uarr;: Rotación en sentido horario
+
+&darr;: Soft drop
+
+&larr; y &rarr;: Movimiento horizontal
+
+**z** o **LCTRL**: Rotación en sentido anti horario
+
+**c** o **LSHIFT**: Retener pieza
+
+**Barra Espaciadora**: Hard Drop
