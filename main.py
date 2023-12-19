@@ -47,7 +47,7 @@ def draw_centered_surface2(screen, surface, y):
 def main():
   pygame.init()
   pygame.display.set_caption("Tetris - By Tatsuya Yamaguchi")
-  pygame.mixer.music.load("korobeiniki.mp3")
+  pygame.mixer.music.load("public\korobeiniki.mp3")
   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
   top_score = 0
   run = True
@@ -63,7 +63,7 @@ def main():
   background = background.convert()
 
   try:
-    font = pygame.font.Font("Roboto-Regular.ttf", 20)
+    font = pygame.font.Font("public\Roboto-Regular.ttf", 20)
   except OSError:
     # If the font file is not available, the default will be used.
     pass
