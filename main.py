@@ -1,5 +1,4 @@
 import pygame
-import numpy as np
 from block import *
 from blockgroup import *
 
@@ -102,14 +101,21 @@ def main():
 
   pygame.mixer.music.play(-1)
 
+  pressed_keys = set()
+
   while run:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         run = False
         break
+      elif event.type == pygame.KEYDOWN:
+        if event.key in MOVEMENT_KEYS:
+          pressed_keys.add(event.key)
+          blocks.start_moving_current_block(event.key)
       elif event.type == pygame.KEYUP:
         if not paused and not game_over:
           if event.key in MOVEMENT_KEYS:
+            pressed_keys.remove(event.key)
             blocks.stop_moving_current_block()
           elif event.key == pygame.K_UP:
             blocks.rotate_current_block_left()
@@ -132,14 +138,9 @@ def main():
           elif event.key == pygame.K_q:
             run = False
 
-
       # Stop moving blocks if the game is over or paused.
       if game_over or paused:
         continue
-
-      if event.type == pygame.KEYDOWN:
-        if event.key in MOVEMENT_KEYS:
-          blocks.start_moving_current_block(event.key)
 
       try:
         if event.type == EVENT_UPDATE_CURRENT_BLOCK:
@@ -148,6 +149,15 @@ def main():
           blocks.move_current_block()
       except TopReached:
         game_over = True
+
+    if not paused and not game_over:
+        if pressed_keys:
+          for key in pressed_keys:
+              if key in (pygame.K_LEFT, pygame.K_RIGHT):
+                  blocks.start_moving_current_block(key)
+          draw_shadow(blocks.current_block, blocks, background)
+        else:
+          blocks.stop_moving_current_block()
 
     # Draw background and grid.
     screen.blit(background, (0, 0))
@@ -180,6 +190,7 @@ def main():
       draw_centered_surface1(screen, pause_msg, 250)
 
     if game_over:
+      pressed_keys.clear()
       screen.blit(background, (0, 0))
       blocks.draw(screen)
       draw_centered_surface1(screen, game_over_text1, 50)
